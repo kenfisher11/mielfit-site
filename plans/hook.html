@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;background:#fff;color:#111}
+.s{position:absolute;inset:0;opacity:0}
+/* 1: 질문 */
+#s1{background:#fff}
+#q1{position:absolute;left:60px;right:60px;top:170px;font-size:104px;font-weight:900;line-height:1.12;letter-spacing:-.03em}
+#q1 em{font-style:normal;color:#E0313B}
+#pa{position:absolute;left:140px;right:140px;top:620px;height:800px;display:flex;align-items:center;justify-content:center}
+#pa img{max-width:100%;max-height:100%;object-fit:contain}
+#ta{position:absolute;left:50%;top:1440px;transform:translateX(-50%) rotate(-3deg);background:#E0313B;color:#fff;font-size:86px;font-weight:900;padding:18px 44px;border-radius:24px;white-space:nowrap}
+#ba{position:absolute;left:0;right:0;top:1620px;text-align:center;font-size:44px;font-weight:700;color:#555}
+/* 2: 반전 */
+#s2{background:#F2FF9E}
+#q2{position:absolute;left:60px;right:60px;top:150px;font-size:92px;font-weight:900;line-height:1.15;letter-spacing:-.03em;color:#10302a}
+#q2 em{font-style:normal;background:#10302a;color:#F2FF9E;padding:0 14px;border-radius:14px}
+.pc{position:absolute;top:640px;width:440px;height:620px;border-radius:40px;background:#fff;display:flex;flex-direction:column;align-items:center;padding:30px;box-shadow:0 20px 50px rgba(0,0,0,.15)}
+.pc img{width:360px;height:360px;object-fit:contain}
+.pc b{margin-top:16px;font-size:34px;font-weight:900;text-align:center}
+.pc span{margin-top:8px;font-size:48px;font-weight:900}
+#c1{left:60px}#c1 span{color:#E0313B;text-decoration:line-through;text-decoration-thickness:6px}
+#c2{right:60px}#c2 span{color:#2b8a5a}
+#vs{position:absolute;left:50%;top:900px;transform:translateX(-50%);width:110px;height:110px;border-radius:50%;background:#10302a;color:#F2FF9E;font-size:46px;font-weight:900;display:flex;align-items:center;justify-content:center;z-index:2}
+#same{position:absolute;left:60px;right:60px;top:1320px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+#same span{background:#10302a;color:#fff;font-size:38px;font-weight:800;padding:12px 28px;border-radius:99px}
+#t2{position:absolute;left:0;right:0;top:1560px;text-align:center;font-size:58px;font-weight:900;color:#10302a}
+/* 3: 요청 */
+#s3{background:#10302a;color:#fff}
+#e1{position:absolute;left:60px;right:60px;top:420px;font-size:96px;font-weight:900;line-height:1.18;letter-spacing:-.03em}
+#e1 em{font-style:normal;color:#F2FF9E}
+#e2{position:absolute;left:60px;right:60px;top:900px;font-size:52px;font-weight:700;line-height:1.5;color:#cfe3da}
+#e3{position:absolute;left:60px;top:1260px;background:#ff2b2b;color:#fff;font-size:60px;font-weight:900;padding:24px 60px;border-radius:99px}
+#disc{position:absolute;left:60px;right:60px;bottom:90px;text-align:center;font-size:28px;color:#888}
+#s3 #disc{color:rgba(255,255,255,.5)}
+#ep{position:absolute;right:50px;top:60px;font-size:30px;font-weight:800;color:#999}
+#pb small,#t2 small{display:block;font-size:28px;font-weight:700;color:#557}
+/* v3: 정체 가린 쌍둥이 */
+#v3{position:absolute;inset:0;background:#fff;display:none}
+#cq{position:absolute;left:60px;right:60px;top:150px;font-size:96px;font-weight:900;line-height:1.12;letter-spacing:-.04em}
+#cq em{font-style:normal;color:#E0313B}
+#cq small{display:block;margin-top:22px;font-size:62px;font-weight:900;color:#111;letter-spacing:-.03em}
+#cq small b{color:#1F8A5B}
+.dc{position:absolute;top:620px;width:450px;height:700px;border-radius:44px;background:#f5f5f5;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 20px}
+.dc img{width:380px;height:440px;object-fit:contain}
+.dc b{margin-top:14px;font-size:40px;font-weight:900}
+.dc span{margin-top:6px;font-size:64px;font-weight:900;letter-spacing:-.03em;text-align:center}
+#da{left:50px}#da span{color:#E0313B}
+#db{right:50px;background:#10302a;color:#F2FF9E}#db img{filter:brightness(0) invert(1) opacity(.18)}#db span{color:#F2FF9E}
+#qm{position:absolute;left:0;right:0;top:110px;text-align:center;font-size:300px;font-weight:900;color:#F2FF9E;line-height:1}
+#stamp{position:absolute;left:50%;top:1380px;transform:translateX(-50%) rotate(-4deg);background:#E0313B;color:#fff;font-size:72px;font-weight:900;padding:18px 46px;border-radius:22px;white-space:nowrap}
+#hint{position:absolute;left:0;right:0;top:1560px;text-align:center;font-size:50px;font-weight:800;color:#555}
+#e1 small{font-size:56px;color:#cfe3da}
+</style></head><body>
+<div class="s" id="s1"><div id="q1"></div><div id="pa"><img id="ia"></div><div id="ta"></div><div id="ba"></div></div>
+<div id="v3"><div id="cq"></div><div class="dc" id="da"><img id="ia3"><b id="na3"></b><span id="pa3"></span></div><div class="dc" id="db"><img id="ib3"><div id="qm">?</div><b>정체는?</b><span id="pb3"></span></div><div id="stamp"></div><div id="hint">3초 뒤 공개</div></div>
+<div class="s" id="s2"><div id="q2"></div><div class="pc" id="c1"><img id="ia2"><b id="na"></b><span id="pa2"></span></div><div id="vs">VS</div><div class="pc" id="c2"><img id="ib"><b id="nb"></b><span id="pb"></span></div><div id="same"></div><div id="t2"></div></div>
+<div class="s" id="s3"><div id="e1">내 화장품도<br><em>반값 쌍둥이</em><br>있을까?</div><div id="e2">댓글에 지금 쓰는 제품 이름만 남겨주세요.<br>다음 영상에서 찾아드려요.</div><div id="e3">🔔 구독하고 내 차례 받기</div><div id="disc">성분이 비슷해도 효과·사용감은 다를 수 있어요 · 가격은 조사 시점 기준</div></div>
+<div id="ep"></div>
+<script>
+const D = window.__D || {}; const $ = id => document.getElementById(id);
+const ease = x => { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); };
+const won = n => Number(n).toLocaleString('ko-KR') + '원';
+const br = s => String(s || '').replace(/\s*\(.*?\)/, '');
+const cat = D.cat_ko || '화장품';
+const MAN = n => { n = Number(n); if (n >= 10000) { const m = n / 10000; return (m >= 10 || m === Math.floor(m)) ? Math.floor(m + .5) + '만원' : (Math.floor(m * 10 + .5) / 10) + '만원'; } return (Math.floor(n / 1000 + .5) * 1000).toLocaleString('ko-KR') + '원'; };
+const SAMEV = D.a.ml && D.b.ml && Math.abs(D.a.ml - D.b.ml) / D.a.ml > .1;
+const BP = SAMEV ? Math.round(D.b.price * D.a.ml / D.b.ml / 100) * 100 : D.b.price;
+$('q1').innerHTML = `이 ${cat}<br><em>${won(D.a.price)}</em> 주고<br>사셨어요?`;
+$('ia').src = D.a.img; $('ta').textContent = won(D.a.price); $('ba').textContent = br(D.a.brand_ko) + ' ' + D.a.name_ko;
+$('q2').innerHTML = `정답은 <em>${br(D.b.brand_ko)}</em><br>성분 ${D.sim}% 닮음`;
+$('ia2').src = D.a.img; $('ib').src = D.b.img; $('na').textContent = br(D.a.brand_ko); $('nb').textContent = br(D.b.brand_ko);
+$('pa2').textContent = won(D.a.price); $('pb').innerHTML = won(D.b.price) + (SAMEV ? `<small>같은 ${+D.a.ml}ml면 ${won(BP)}</small>` : '');
+$('same').innerHTML = (D.same || []).slice(0, 3).map(s => '<span>' + (s.ko || s) + '</span>').join('');
+$('t2').innerHTML = `${MAN(D.a.price - BP)} 아껴요` + (SAMEV ? `<small>같은 ${+D.a.ml}ml 기준</small>` : '');
+if (D.ep) $('ep').textContent = '반값 쌍둥이 #' + D.ep;
+if (D.nextL) { $('e1').innerHTML = `<small>다음 편</small><br><em>${D.nextL}</em><br>${D.nextD} 손해?`; $('e2').innerHTML = '구독해 두면<br>알림으로 바로 받아요'; $('e3').textContent = '🔔 구독'; }
+else { $('e1').innerHTML = `내일도<br><em>쌍둥이</em> 공개`; $('e2').innerHTML = '내 화장품도 궁금하면<br>댓글에 제품 이름만 남겨주세요'; $('e3').textContent = '🔔 구독'; }
+const V3 = D.v3 !== false;
+if (V3) { const s1 = $('s1'); [...s1.children].forEach(c => c.style.visibility = 'hidden'); s1.appendChild($('v3')); $('v3').style.display = 'block';
+  const bn = br(D.a.brand_ko);
+  $('cq').innerHTML = `<em>${bn} ${cat}</em> 쓰는 사람?<small>성분 <b>${D.sim}%</b> 같은 게 <b>${MAN(D.b.price)}</b></small>`;
+  $('ia3').src = D.a.img; $('ib3').src = D.b.img; $('na3').textContent = bn; $('pa3').textContent = MAN(D.a.price);
+  $('pb3').innerHTML = SAMEV ? `${MAN(D.b.price)}<small style="display:block;font-size:30px;opacity:.75;margin-top:6px">${+D.a.ml}ml로 치면 ${MAN(BP)}</small>` : MAN(BP);
+  $('stamp').textContent = `${MAN(D.a.price - BP)} 차이`; if (SAMEV) $('hint').textContent = `같은 ${+D.a.ml}ml 기준 · 3초 뒤 공개`; }
+window.T = t => {
+  const show = (id, a, b) => { const e = $(id); const v = t < a || t > b ? 0 : Math.min(a === 0 ? 1 : (t - a) / .15, (b - t) / .15, 1); e.style.opacity = v; return v; };
+  show('s1', 0, 3.2); show('s2', 3.2, 10.2); show('s3', 10.2, 15);
+  $('q1').style.transform = `scale(${1 + .04 * Math.sin(t * 6)})`;
+  $('ta').style.transform = `translateX(-50%) rotate(-3deg) scale(${.85 + .15 * ease((t - .5) / .3)})`;
+  $('pa').style.transform = `scale(${.9 + .1 * ease(t / .4)})`;
+  if (V3) { $('cq').style.transform = `scale(${1 + .03 * Math.sin(t * 7)})`;
+    $('da').style.transform = `scale(${.94 + .06 * ease(t / .25)})`; $('db').style.transform = `scale(${.94 + .06 * ease(t / .25)}) rotate(${Math.sin(t * 9) * 1.5}deg)`;
+    $('qm').style.transform = `scale(${1 + .12 * Math.abs(Math.sin(t * 4))})`;
+    const st = ease((t - 1.1) / .2); $('stamp').style.opacity = st; $('stamp').style.transform = `translateX(-50%) rotate(-4deg) scale(${2 - st})`;
+    $('hint').style.opacity = t > 1.6 ? .6 + .4 * Math.sin(t * 8) : 0; }
+  const k = t - 3.2;
+  $('c1').style.transform = `translateX(${(1 - ease(k / .4)) * -500}px)`; $('c2').style.transform = `translateX(${(1 - ease((k - .5) / .4)) * 500}px)`;
+  $('same').style.opacity = ease((k - 1.6) / .4); $('t2').style.opacity = ease((k - 3) / .4); $('t2').style.transform = `scale(${1 + .06 * Math.max(0, Math.sin((k - 3) * 5))})`;
+  const e = t - 10.2; $('e1').style.transform = `translateY(${(1 - ease(e / .5)) * 80}px)`; $('e3').style.transform = `scale(${1 + .05 * Math.sin(t * 5)})`;
+};
+T(0);
+</script></body></html>
