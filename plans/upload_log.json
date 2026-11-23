@@ -26,5 +26,32 @@
   "slot": "11/23 21:30",
   "replaced_private": "2m9htay6ViM",
   "verified": true
+ },
+ {
+  "at": "2026-11-23 13:40 KST",
+  "action": "1편 체제 전환 — 비공개 확인됨",
+  "private_ok": [
+   "HoFRmsSoF1E(11/23 17:00 메디큐브)",
+   "dgkqQv9z93I(11/23 21:30 지디일레븐)",
+   "yL8vPgD1RS0(11/25 17:00)",
+   "JR5Le6XXyIs(12/7 12:30)"
+  ],
+  "still_scheduled": [
+   "5sKZv62kNtg",
+   "DHgZVdXhfuU",
+   "b8_5NrbsDSI",
+   "SgxJD90EuBk",
+   "DGOxQyLZL8E",
+   "JmEPQIgVgQM",
+   "HtP3-ZctI_E",
+   "D0RNG3qHVSU",
+   "QidQRf5bxcU",
+   "ddY7UlXZTxU",
+   "IyDhB108YjI",
+   "qUbehSFgaB8",
+   "LqKdLM0b9fk",
+   "TuA_gQ7HaNo"
+  ],
+  "note": "크롬 가려진 상태에선 저장이 일부만 반영됨"
  }
 ]
