@@ -39,8 +39,11 @@ html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK 
 #cq{position:absolute;left:60px;right:60px;top:150px;font-size:96px;font-weight:900;line-height:1.12;letter-spacing:-.04em}
 #cq em{font-style:normal;color:#E0313B}
 #cq small{display:block;margin-top:22px;font-size:62px;font-weight:900;color:#111;letter-spacing:-.03em}
+#cq .who{display:block;font-size:64px;color:#111;letter-spacing:-.03em}
+#cq .big{display:block;font-size:210px;line-height:1;color:#E0313B;letter-spacing:-.06em;margin-top:10px}
+#cq .los{display:block;font-size:72px;color:#111;margin-top:6px}
 #cq small b{color:#1F8A5B}
-.dc{position:absolute;top:620px;width:450px;height:700px;border-radius:44px;background:#f5f5f5;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 20px}
+.dc{position:absolute;top:660px;width:450px;height:700px;border-radius:44px;background:#f5f5f5;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 20px}
 .dc img{width:380px;height:440px;object-fit:contain}
 .dc b{margin-top:14px;font-size:40px;font-weight:900}
 .dc span{margin-top:6px;font-size:64px;font-weight:900;letter-spacing:-.03em;text-align:center}
@@ -78,20 +81,20 @@ else { $('e1').innerHTML = `내일도<br><em>쌍둥이</em> 공개`; $('e2').inn
 const V3 = D.v3 !== false;
 if (V3) { const s1 = $('s1'); [...s1.children].forEach(c => c.style.visibility = 'hidden'); s1.appendChild($('v3')); $('v3').style.display = 'block';
   const bn = br(D.a.brand_ko);
-  $('cq').innerHTML = `<em>${bn} ${cat}</em> 쓰는 사람?<small>성분 <b>${D.sim}%</b> 같은 게 <b>${MAN(D.b.price)}</b></small>`;
+  $('cq').innerHTML = `<span class="who"><em>${bn} ${cat}</em> 쓰는 분</span><span class="big">${MAN(D.a.price - BP)}</span><span class="los">더 내고 있어요</span>`;
   $('ia3').src = D.a.img; $('ib3').src = D.b.img; $('na3').textContent = bn; $('pa3').textContent = MAN(D.a.price);
   $('pb3').innerHTML = SAMEV ? `${MAN(D.b.price)}<small style="display:block;font-size:30px;opacity:.75;margin-top:6px">${+D.a.ml}ml로 치면 ${MAN(BP)}</small>` : MAN(BP);
-  $('stamp').textContent = `${MAN(D.a.price - BP)} 차이`; if (SAMEV) $('hint').textContent = `같은 ${+D.a.ml}ml 기준 · 3초 뒤 공개`; }
+  $('stamp').textContent = `성분 ${D.sim}% 같은 쌍둥이`; if (SAMEV) $('hint').textContent = `같은 ${+D.a.ml}ml 기준 · 3초 뒤 공개`; }
 window.T = t => {
   const show = (id, a, b) => { const e = $(id); const v = t < a || t > b ? 0 : Math.min(a === 0 ? 1 : (t - a) / .15, (b - t) / .15, 1); e.style.opacity = v; return v; };
   show('s1', 0, 3.2); show('s2', 3.2, 10.2); show('s3', 10.2, 15);
   $('q1').style.transform = `scale(${1 + .04 * Math.sin(t * 6)})`;
   $('ta').style.transform = `translateX(-50%) rotate(-3deg) scale(${.85 + .15 * ease((t - .5) / .3)})`;
   $('pa').style.transform = `scale(${.9 + .1 * ease(t / .4)})`;
-  if (V3) { $('cq').style.transform = `scale(${1 + .03 * Math.sin(t * 7)})`;
+  if (V3) { $('cq').style.transform = 'none'; $('cq').querySelector('.big').style.transform = `scale(${1 + .04 * Math.sin(t * 7)})`;
     $('da').style.transform = `scale(${.94 + .06 * ease(t / .25)})`; $('db').style.transform = `scale(${.94 + .06 * ease(t / .25)}) rotate(${Math.sin(t * 9) * 1.5}deg)`;
     $('qm').style.transform = `scale(${1 + .12 * Math.abs(Math.sin(t * 4))})`;
-    const st = ease((t - 1.1) / .2); $('stamp').style.opacity = st; $('stamp').style.transform = `translateX(-50%) rotate(-4deg) scale(${2 - st})`;
+    $('stamp').style.opacity = 1; $('stamp').style.transform = `translateX(-50%) rotate(-4deg) scale(${1 + .04 * Math.sin(t * 6)})`;
     $('hint').style.opacity = t > 1.6 ? .6 + .4 * Math.sin(t * 8) : 0; }
   const k = t - 3.2;
   $('c1').style.transform = `translateX(${(1 - ease(k / .4)) * -500}px)`; $('c2').style.transform = `translateX(${(1 - ease((k - .5) / .4)) * 500}px)`;

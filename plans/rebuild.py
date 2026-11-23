@@ -73,7 +73,7 @@ def voice(key, D, base):
     samev = A['ml'] and B['ml'] and abs(float(A['ml']) - float(B['ml'])) / float(A['ml']) > .1
     bp = round(float(B['price']) * float(A['ml']) / float(B['ml']) / 100) * 100 if samev else float(B['price'])
     diff = MAN(float(A['price']) - bp)
-    ln = [(0.05, f"{say(A['brand_ko'])} {cat} 쓰시는 분, 잠깐만요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
+    ln = [(0.05, f"{say(A['brand_ko'])} {cat} 쓰시는 분, {kn(diff)} 원 더 내고 있어요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
           (5.2, (f"같은 양이면 " if samev else '') + f"{kn(diff)} 원 아껴요"),
           (10.4, f"다음 편은 {say(D['nextL'])}, 구독해 두세요" if D.get('nextL') else "내일도 쌍둥이 공개, 구독해 두세요")]
     ins, flt = ['-i', base], []
