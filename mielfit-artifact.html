@@ -1849,7 +1849,7 @@ function deal(x){
     <div class="duo">${imgBox(a, {base:1, strip:1, mfr:1})}${arrow}${imgBox(b, {strip:1, mfr:1})}</div>
     ${pp(a, b)}
     <span class="times">같은 금액이면 <em>${T(x)}통</em></span>
-    <div class="meta">${x.same_mfr ? '<span class="tag mfr">같은 공장</span>' + tipH('포장에 표시된 제조업자가 같다는 뜻이에요. 같은 공장이라도 처방(성분 배합)은 브랜드마다 달라요.') : x.same_grp ? '<span class="tag mfr">같은 그룹 제조</span>' : ''}${tierTag(x.tier)}<span>ml당 ${C(x)}% ↓</span></div>
+    <div class="meta">${P[x.a] && P[x.b] && P[x.a].brand === P[x.b].brand ? '<span class="tag">같은 브랜드 저렴이</span>' : ''}${x.same_mfr ? '<span class="tag mfr">같은 공장</span>' + tipH('포장에 표시된 제조업자가 같다는 뜻이에요. 같은 공장이라도 처방(성분 배합)은 브랜드마다 달라요.') : x.same_grp ? '<span class="tag mfr">같은 그룹 제조</span>' : ''}${tierTag(x.tier)}<span>ml당 ${C(x)}% ↓</span></div>
   </a>`;
 }
 function card(p){
@@ -2343,7 +2343,7 @@ function dupeSheet(aid, bid){
   if (!a || !b || !x) return false;
   document.getElementById('nearSheet')?.remove();
   const d = document.createElement('div'); d.id = 'nearSheet'; d.className = 'nsh';
-  const fac = x.same_mfr ? `<span class="tag mfr">${L('같은 공장', 'Same factory')}</span>` : '';
+  const fac = (x.same_mfr ? `<span class="tag mfr">${L('같은 공장', 'Same factory')}</span>` : '') + (P[x.a] && P[x.b] && P[x.a].brand === P[x.b].brand ? `<span class="tag">${L('같은 브랜드 저렴이', 'Same-brand saver')}</span>` : '');
   d.innerHTML = `<div class="nsh-bg" data-x></div><div class="nsh-card" role="dialog" aria-label="${L('듀프 요약', 'Dupe summary')}">
     <button type="button" class="nsh-x" data-x aria-label="닫기">✕</button>
     <b class="nsh-t">${L('같은 금액이면', 'Same money buys')} ${(PA(x) / PB(x)).toFixed(1)}${L('통', '×')}</b>
@@ -2385,7 +2385,7 @@ function compare(aid, bid){
       <div class="side b">${imgBox(b, {badge: 'ml당 -' + C(x) + '%'})}<span class="lab">비슷한 성분 제품</span>${mtag(b)}<span class="clip" style="font-size:13.5px"><b>${esc(BR(b))}</b> ${esc(NM(b))}</span><span class="pr tn" style="color:var(--sale)">${won(PR(b))}</span><span class="ml tn">${b.ml}ml · <b>ml당 ${ppm(b)}</b></span>${rvB(b)}${b.spf ? `<span class="tag" style="align-self:flex-start">${esc(b.spf)}</span>` : ''}${oyBtn(b, 1)}${nearBtn(b, 1)}</div>
     </div>
     <div class="cols"><div>
-      <div class="sum"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>한눈에 보기</h2><span style="display:flex;gap:6px">${x.same_mfr ? '<span class="tag mfr">같은 공장</span>' + tipH('포장에 표시된 제조업자가 같다는 뜻이에요. 같은 공장이라도 처방(성분 배합)은 브랜드마다 달라요.') : x.same_grp ? '<span class="tag mfr">같은 그룹 제조</span>' : ''}${tierTag(x.tier)}</span></div>
+      <div class="sum"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>한눈에 보기</h2><span style="display:flex;gap:6px">${P[x.a] && P[x.b] && P[x.a].brand === P[x.b].brand ? '<span class="tag">같은 브랜드 저렴이</span>' : ''}${x.same_mfr ? '<span class="tag mfr">같은 공장</span>' + tipH('포장에 표시된 제조업자가 같다는 뜻이에요. 같은 공장이라도 처방(성분 배합)은 브랜드마다 달라요.') : x.same_grp ? '<span class="tag mfr">같은 그룹 제조</span>' : ''}${tierTag(x.tier)}</span></div>
         <div class="sline"><i class="y">✓</i><span>같은 핵심 성분 <b>${nm}개</b><small>${x.same.map(esc).join(', ')}</small></span></div>
         ${x.miss.length ? `<div class="sline"><i class="x">✕</i><span>기준 제품에만 있는 핵심 성분 <b>${x.miss.length}개</b><small>${x.miss.map(esc).join(', ')}</small></span></div>` : ''}
         ${b.rv && b.rv[0] >= 100 ? `<div class="sline"><i class="y">★</i><span><b>쿠팡 리뷰 ${rvFmt(b.rv[0])}개</b>로 검증된 제품이에요${a.rv && a.rv[0] ? ` (기준 제품 리뷰 ${rvFmt(a.rv[0])}개)` : ''}<small>리뷰 수·별점은 쿠팡 기준(${esc(b.rv[2] || '')})이에요. 피부 타입에 따라 사용감은 다를 수 있어요.</small></span></div>` : ''}
