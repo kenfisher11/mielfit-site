@@ -53,12 +53,18 @@ html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK 
 #stamp{position:absolute;left:50%;top:1380px;transform:translateX(-50%) rotate(-4deg);background:#E0313B;color:#fff;font-size:72px;font-weight:900;padding:18px 46px;border-radius:22px;white-space:nowrap}
 #hint{position:absolute;left:0;right:0;top:1560px;text-align:center;font-size:50px;font-weight:800;color:#555}
 #e1 small{font-size:56px;color:#cfe3da}
+#v4{position:absolute;inset:0;background:#fff;display:none;z-index:50}
+#v4 img{position:absolute;left:50%;top:330px;width:900px;height:1150px;object-fit:contain;transform:translateX(-50%)}
+#v4 .q{position:absolute;top:90px;left:0;right:0;text-align:center;font-size:150px;font-weight:900;color:#111;letter-spacing:-.06em}
+#v4 .q em{font-style:normal;color:#E0313B}
+#v4 .bn{position:absolute;bottom:170px;left:0;right:0;text-align:center;font-size:58px;font-weight:800;color:#333}
 </style></head><body>
 <div class="s" id="s1"><div id="q1"></div><div id="pa"><img id="ia"></div><div id="ta"></div><div id="ba"></div></div>
 <div id="v3"><div id="cq"></div><div class="dc" id="da"><img id="ia3"><b id="na3"></b><span id="pa3"></span></div><div class="dc" id="db"><img id="ib3"><div id="qm">?</div><b>정체는?</b><span id="pb3"></span></div><div id="stamp"></div><div id="hint">3초 뒤 공개</div></div>
 <div class="s" id="s2"><div id="q2"></div><div class="pc" id="c1"><img id="ia2"><b id="na"></b><span id="pa2"></span></div><div id="vs">VS</div><div class="pc" id="c2"><img id="ib"><b id="nb"></b><span id="pb"></span></div><div id="same"></div><div id="t2"></div></div>
 <div class="s" id="s3"><div id="e1">내 화장품도<br><em>반값 쌍둥이</em><br>있을까?</div><div id="e2">댓글에 지금 쓰는 제품 이름만 남겨주세요.<br>다음 영상에서 찾아드려요.</div><div id="e3">🔔 구독하고 내 차례 받기</div><div id="disc">성분이 비슷해도 효과·사용감은 다를 수 있어요 · 가격은 조사 시점 기준</div></div>
 <div id="ep"></div>
+<div id="v4"><div class="q">이거 <em>얼마</em>게요?</div><img id="i4"><div class="bn" id="bn4"></div></div>
 <script>
 const D = window.__D || {}; const $ = id => document.getElementById(id);
 const ease = x => { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); };
@@ -85,7 +91,11 @@ if (V3) { const s1 = $('s1'); [...s1.children].forEach(c => c.style.visibility =
   $('ia3').src = D.a.img; $('ib3').src = D.b.img; $('na3').textContent = bn; $('pa3').textContent = MAN(D.a.price);
   $('pb3').innerHTML = SAMEV ? `${MAN(D.b.price)}<small style="display:block;font-size:30px;opacity:.75;margin-top:6px">${+D.a.ml}ml로 치면 ${MAN(BP)}</small>` : MAN(BP);
   $('stamp').textContent = `성분 ${D.sim}% 같은 쌍둥이`; if (SAMEV) $('hint').textContent = `같은 ${+D.a.ml}ml 기준 · 3초 뒤 공개`; }
+const V4 = D.v4 !== false;
+if (V4) { $('v4').style.display = 'block'; $('i4').src = D.a.img; $('bn4').textContent = br(D.a.brand_ko) + ' ' + cat; }
 window.T = t => {
+  if (V4) { const o = t < 1.1 ? 1 : Math.max(0, 1 - (t - 1.1) / .2); $('v4').style.opacity = o; $('v4').style.visibility = o > 0 ? 'visible' : 'hidden';
+    $('i4').style.transform = `translateX(-50%) scale(${1.08 - .08 * ease(t / 1.1)})`; $('v4').querySelector('.q').style.transform = `scale(${1 + .05 * Math.sin(t * 9)})`; }
   const show = (id, a, b) => { const e = $(id); const v = t < a || t > b ? 0 : Math.min(a === 0 ? 1 : (t - a) / .15, (b - t) / .15, 1); e.style.opacity = v; return v; };
   show('s1', 0, 3.2); show('s2', 3.2, 10.2); show('s3', 10.2, 15);
   $('q1').style.transform = `scale(${1 + .04 * Math.sin(t * 6)})`;

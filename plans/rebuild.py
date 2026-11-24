@@ -73,13 +73,13 @@ def voice(key, D, base):
     samev = A['ml'] and B['ml'] and abs(float(A['ml']) - float(B['ml'])) / float(A['ml']) > .1
     bp = round(float(B['price']) * float(A['ml']) / float(B['ml']) / 100) * 100 if samev else float(B['price'])
     diff = MAN(float(A['price']) - bp)
-    ln = [(0.05, f"{say(A['brand_ko'])} {cat} 쓰시는 분, {kn(diff)} 원 더 내고 있어요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
+    ln = [(0.05, f"이 {cat}, 얼마게요?"), (1.3, f"{say(A['brand_ko'])} {cat} 쓰시는 분, {kn(diff)} 원 더 내고 있어요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
           (5.2, (f"같은 양이면 " if samev else '') + f"{kn(diff)} 원 아껴요"),
           (10.4, f"다음 편은 {say(D['nextL'])}, 구독해 두세요" if D.get('nextL') else "내일도 쌍둥이 공개, 구독해 두세요")]
     ins, flt = ['-i', base], []
     for i, (t0, text) in enumerate(ln):
         fn = os.path.join(OUT, f'_v{i}.wav'); gen(text, fn); ins += ['-i', fn]; ms = int(t0 * 1000); flt.append(f'[{i + 1}]adelay={ms}|{ms}[v{i}]')
-    flt.append(''.join(f'[v{i}]' for i in range(4)) + 'amix=inputs=4:normalize=0,volume=1.6,aresample=44100,pan=stereo|c0=c0|c1=c0[v]')
+    flt.append(''.join(f'[v{i}]' for i in range(len(ln))) + f'amix=inputs={len(ln)}:normalize=0,volume=1.6,aresample=44100,pan=stereo|c0=c0|c1=c0[v]')
     flt.append('[0:a]volume=0.28[m]'); flt.append('[m][v]amix=inputs=2:normalize=0:duration=first[out]')
     out = os.path.join(OUT, key + '.mp4')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', *ins, '-filter_complex', ';'.join(flt), '-map', '0:v', '-map', '[out]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', out], check=True)
