@@ -1,0 +1,6 @@
+const S=JSON.parse(localStorage.getItem('__mf_one'))[IDX]; const sl=ms=>new Promise(r=>setTimeout(r,ms)); const dlg=document.querySelector('ytcp-uploads-dialog');
+const ti=[...document.querySelectorAll('ytcp-datetime-picker input')].filter(e=>e.offsetParent).pop(); let it=null;
+for(let k=0;k<3&&ti.value!==S.tm;k++){ ti.click(); await sl(1500); it=[...document.querySelectorAll('tp-yt-paper-item')].find(e=>e.offsetParent&&e.innerText.trim()===S.tm); if(it){it.scrollIntoView(); it.click();} await sl(800); }
+const tv=ti.value; const dtx=((dlg.querySelector('#datepicker-trigger')||{}).innerText||'').trim(); let res='';
+if(tv===S.tm && dtx===S.ds){ dlg.querySelector('#done-button').click(); const t0=Date.now(); while(Date.now()-t0<40000){ const tx=document.body.innerText; if(/동영상 예약됨|게시된 동영상|동영상 처리 중|공개 상태로 설정됩니다/.test(tx)){res='OK';break;} if(/일일 업로드 한도/.test(tx)){res='LIMIT';break;} await sl(800);} }
+return JSON.stringify({f:S.f,tv,dtx,res})
