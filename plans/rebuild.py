@@ -73,12 +73,18 @@ def voice(key, D, base):
     samev = A['ml'] and B['ml'] and abs(float(A['ml']) - float(B['ml'])) / float(A['ml']) > .1
     bp = round(float(B['price']) * float(A['ml']) / float(B['ml']) / 100) * 100 if samev else float(B['price'])
     diff = MAN(float(A['price']) - bp)
-    ln = [(0.05, f"이 {cat}, 얼마게요?"), (1.3, f"{say(A['brand_ko'])} {cat} 쓰시는 분, {kn(diff)} 원 더 내고 있어요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
+    first = (0.05, f"이거랑 이거, 성분 {kn(D['sim'])} 퍼센트 같아요") if D.get('v5') else (0.05, f"이 {cat}, 얼마게요?")
+    ln = [first, (2.5 if D.get('v5') else 1.3, f"{say(A['brand_ko'])} {cat}, {kn(diff)} 원 손해예요"), (3.3, f"정답은 {say(B['brand_ko'])} {cat}"),
           (5.2, (f"같은 양이면 " if samev else '') + f"{kn(diff)} 원 아껴요"),
           (10.4, f"다음 편은 {say(D['nextL'])}, 구독해 두세요" if D.get('nextL') else "내일도 쌍둥이 공개, 구독해 두세요")]
     ins, flt = ['-i', base], []
+    end = -1.0; global LAST_T
+    LAST_T = []
     for i, (t0, text) in enumerate(ln):
-        fn = os.path.join(OUT, f'_v{i}.wav'); gen(text, fn); ins += ['-i', fn]; ms = int(t0 * 1000); flt.append(f'[{i + 1}]adelay={ms}|{ms}[v{i}]')
+        fn = os.path.join(OUT, f'_v{i}.wav'); gen(text, fn); ins += ['-i', fn]
+        w = wave.open(fn); dur = w.getnframes() / w.getframerate(); w.close()
+        t0 = max(t0, end + 0.12); end = t0 + dur; LAST_T.append((round(t0, 2), round(end, 2)))
+        ms = int(t0 * 1000); flt.append(f'[{i + 1}]adelay={ms}|{ms}[v{i}]')
     flt.append(''.join(f'[v{i}]' for i in range(len(ln))) + f'amix=inputs={len(ln)}:normalize=0,volume=1.6,aresample=44100,pan=stereo|c0=c0|c1=c0[v]')
     flt.append('[0:a]volume=0.28[m]'); flt.append('[m][v]amix=inputs=2:normalize=0:duration=first[out]')
     out = os.path.join(OUT, key + '.mp4')
@@ -88,7 +94,8 @@ if __name__ == '__main__':
     plan = json.load(open(sys.argv[1])); musics = sorted(os.listdir(os.path.join(H, 'music')))
     for i, it in enumerate(plan):
         D = mkdata(it['key'], it['a'], it['b'], it.get('next'), it.get('ep'), it.get('sim'))
+        if it.get('v5'): D['v5'] = True
         json.dump(D, open(os.path.join(OUT, it['key'] + '.data.json'), 'w'), ensure_ascii=False)
         base = render(it['key'], D, os.path.join(H, 'music', musics[i % len(musics)]))
         out, lines, diff = voice(it['key'], D, base); os.remove(base)
-        print('made', it['key'], '|', lines, flush=True)
+        print('made', it['key'], LAST_T, '|', lines, flush=True)

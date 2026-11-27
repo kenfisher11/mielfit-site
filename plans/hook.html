@@ -53,6 +53,18 @@ html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK 
 #stamp{position:absolute;left:50%;top:1380px;transform:translateX(-50%) rotate(-4deg);background:#E0313B;color:#fff;font-size:72px;font-weight:900;padding:18px 46px;border-radius:22px;white-space:nowrap}
 #hint{position:absolute;left:0;right:0;top:1560px;text-align:center;font-size:50px;font-weight:800;color:#555}
 #e1 small{font-size:56px;color:#cfe3da}
+#v5{position:absolute;inset:0;background:#111;display:none;z-index:51;color:#fff}
+#v5 .t{position:absolute;top:120px;left:0;right:0;text-align:center;font-size:96px;font-weight:900;letter-spacing:-.05em;line-height:1.15}
+#v5 .t em{font-style:normal;color:#FFE14D}
+#v5 .c{position:absolute;top:520px;width:470px;height:820px;background:#fff;border-radius:36px;overflow:hidden}
+#v5 .c img{position:absolute;left:5%;top:40px;width:90%;height:560px;object-fit:contain}
+#v5 .c .n{position:absolute;top:620px;left:0;right:0;text-align:center;font-size:46px;font-weight:800;color:#222}
+#v5 .c .p{position:absolute;top:690px;left:0;right:0;text-align:center;font-size:84px;font-weight:900}
+#v5 .ca{left:50px}#v5 .ca .p{color:#E0313B}
+#v5 .cb{right:50px}#v5 .cb .p{color:#1a9b4a}
+#v5 .vs{position:absolute;top:880px;left:50%;transform:translateX(-50%);width:130px;height:130px;border-radius:50%;background:#E0313B;font-size:56px;font-weight:900;display:flex;align-items:center;justify-content:center;z-index:2}
+#v5 .b{position:absolute;bottom:200px;left:0;right:0;text-align:center;font-size:110px;font-weight:900;letter-spacing:-.05em}
+#v5 .b em{font-style:normal;color:#FFE14D}
 #v4{position:absolute;inset:0;background:#fff;display:none;z-index:50}
 #v4 img{position:absolute;left:50%;top:330px;width:900px;height:1150px;object-fit:contain;transform:translateX(-50%)}
 #v4 .q{position:absolute;top:90px;left:0;right:0;text-align:center;font-size:150px;font-weight:900;color:#111;letter-spacing:-.06em}
@@ -64,7 +76,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK 
 <div class="s" id="s2"><div id="q2"></div><div class="pc" id="c1"><img id="ia2"><b id="na"></b><span id="pa2"></span></div><div id="vs">VS</div><div class="pc" id="c2"><img id="ib"><b id="nb"></b><span id="pb"></span></div><div id="same"></div><div id="t2"></div></div>
 <div class="s" id="s3"><div id="e1">내 화장품도<br><em>반값 쌍둥이</em><br>있을까?</div><div id="e2">댓글에 지금 쓰는 제품 이름만 남겨주세요.<br>다음 영상에서 찾아드려요.</div><div id="e3">🔔 구독하고 내 차례 받기</div><div id="disc">성분이 비슷해도 효과·사용감은 다를 수 있어요 · 가격은 조사 시점 기준</div></div>
 <div id="ep"></div>
-<div id="v4"><div class="q">이거 <em>얼마</em>게요?</div><img id="i4"><div class="bn" id="bn4"></div></div>
+<div id="v5"><div class="t" id="t5"></div><div class="c ca"><img id="i5a"><div class="n" id="n5a"></div><div class="p" id="p5a"></div></div><div class="vs">VS</div><div class="c cb"><img id="i5b"><div class="n" id="n5b"></div><div class="p" id="p5b"></div></div><div class="b" id="b5"></div></div><div id="v4"><div class="q">이거 <em>얼마</em>게요?</div><img id="i4"><div class="bn" id="bn4"></div></div>
 <script>
 const D = window.__D || {}; const $ = id => document.getElementById(id);
 const ease = x => { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); };
@@ -91,9 +103,16 @@ if (V3) { const s1 = $('s1'); [...s1.children].forEach(c => c.style.visibility =
   $('ia3').src = D.a.img; $('ib3').src = D.b.img; $('na3').textContent = bn; $('pa3').textContent = MAN(D.a.price);
   $('pb3').innerHTML = SAMEV ? `${MAN(D.b.price)}<small style="display:block;font-size:30px;opacity:.75;margin-top:6px">${+D.a.ml}ml로 치면 ${MAN(BP)}</small>` : MAN(BP);
   $('stamp').textContent = `성분 ${D.sim}% 같은 쌍둥이`; if (SAMEV) $('hint').textContent = `같은 ${+D.a.ml}ml 기준 · 3초 뒤 공개`; }
-const V4 = D.v4 !== false;
+const V5 = !!D.v5;
+const V4 = D.v4 !== false && !V5;
+if (V5) { $('v5').style.display='block'; $('i5a').src=D.a.img; $('i5b').src=D.b.img; $('n5a').textContent=br(D.a.brand_ko); $('n5b').textContent=br(D.b.brand_ko);
+  $('p5a').textContent=MAN(D.a.price); $('p5b').textContent=MAN(BP); $('t5').innerHTML=`성분 <em>${D.sim}%</em> 같은데`;
+  const r=D.a.price/BP; $('b5').innerHTML = r>=1.95 ? `가격은 <em>${Math.round(r*10)/10}배</em>` : `<em>${MAN(D.a.price-BP)}</em> 차이`; }
 if (V4) { $('v4').style.display = 'block'; $('i4').src = D.a.img; $('bn4').textContent = br(D.a.brand_ko) + ' ' + cat; }
 window.T = t => {
+  if (V5) { const o = t < 2.3 ? 1 : Math.max(0, 1 - (t - 2.3) / .2); $('v5').style.opacity=o; $('v5').style.visibility=o>0?'visible':'hidden';
+    document.querySelector('#v5 .ca').style.transform=`translateX(${(1-ease(t/.25))*-300}px)`; document.querySelector('#v5 .cb').style.transform=`translateX(${(1-ease(t/.25))*300}px)`;
+    document.querySelector('#v5 .vs').style.transform=`translateX(-50%) scale(${ease((t-.2)/.2)*(1+.08*Math.sin(t*10))})`; $('b5').style.transform=`scale(${t<.35?0:1+.05*Math.sin(t*8)})`; }
   if (V4) { const o = t < 1.1 ? 1 : Math.max(0, 1 - (t - 1.1) / .2); $('v4').style.opacity = o; $('v4').style.visibility = o > 0 ? 'visible' : 'hidden';
     $('i4').style.transform = `translateX(-50%) scale(${1.08 - .08 * ease(t / 1.1)})`; $('v4').querySelector('.q').style.transform = `scale(${1 + .05 * Math.sin(t * 9)})`; }
   const show = (id, a, b) => { const e = $(id); const v = t < a || t > b ? 0 : Math.min(a === 0 ? 1 : (t - a) / .15, (b - t) / .15, 1); e.style.opacity = v; return v; };
