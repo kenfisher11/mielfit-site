@@ -2,8 +2,8 @@ const sl=ms=>new Promise(r=>setTimeout(r,ms)); const w=async(fn,ms=20000)=>{cons
 const b=await w(()=>document.querySelector('ytcp-video-metadata-visibility #select-button')); if(!b) return 'nobtn '+location.href;
 const cur=(b.innerText||'').trim(); if(/비공개/.test(cur)) return 'already private';
 (b.querySelector('p#visibility-title')||b).click(); await sl(1200);
-const r=await w(()=>[...document.querySelectorAll('tp-yt-paper-radio-button[name=PRIVATE]')].find(e=>e.offsetParent)); if(!r) return 'noradio'; r.click(); await sl(600);
-const done=[...document.querySelectorAll('ytcp-button#save-button, ytcp-button')].find(e=>e.offsetParent&&/^완료$/.test(e.innerText.trim())); if(done) done.click(); await sl(1000);
+const r=await w(()=>[...document.querySelectorAll('tp-yt-paper-radio-button')].find(e=>e.offsetParent&&(e.getAttribute('name')==='PRIVATE'||/^\s*비공개/.test(e.innerText)))); if(!r) return 'noradio'; r.click(); await sl(600);
+const done=[...document.querySelectorAll('ytcp-button, button')].find(e=>e.offsetParent&&/^완료$/.test(e.innerText.trim())); if(done) done.click(); await sl(1000);
 const sv=await w(()=>{const s=document.querySelector('ytcp-button#save');return s&&!s.hasAttribute('disabled')&&s.getAttribute('aria-disabled')!=='true'?s:null;},8000); if(!sv) return 'nosave';
 sv.click(); await sl(3500);
 return 'saved:'+((document.querySelector('ytcp-video-metadata-visibility #select-button')||{}).innerText||'').trim();
