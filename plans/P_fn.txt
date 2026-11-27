@@ -1,9 +1,11 @@
-const sl=ms=>new Promise(r=>setTimeout(r,ms)); const w=async(fn,ms=20000)=>{const t0=Date.now();while(Date.now()-t0<ms){const v=fn();if(v)return v;await sl(300);}return null;};
-const b=await w(()=>document.querySelector('ytcp-video-metadata-visibility #select-button')); if(!b) return 'nobtn '+location.href;
-const cur=(b.innerText||'').trim(); if(/비공개/.test(cur)) return 'already private';
-(b.querySelector('p#visibility-title')||b).click(); await sl(1200);
-const r=await w(()=>[...document.querySelectorAll('tp-yt-paper-radio-button')].find(e=>e.offsetParent&&(e.getAttribute('name')==='PRIVATE'||/^\s*비공개/.test(e.innerText)))); if(!r) return 'noradio'; r.click(); await sl(600);
+await (async()=>{const sl=ms=>new Promise(r=>setTimeout(r,ms)); const w=async(fn,ms=10000)=>{const t0=Date.now();while(Date.now()-t0<ms){const v=fn();if(v)return v;await sl(300);}return null;};
+const vis=()=>((document.querySelector('ytcp-video-metadata-visibility')||{}).innerText||'').replace(/\s+/g,' ');
+const b=await w(()=>document.querySelector('ytcp-video-metadata-visibility #select-button'),20000); if(!b) return 'nobtn '+location.href;
+if(/비공개/.test(vis())) return 'already private';
+const findR=()=>[...document.querySelectorAll('tp-yt-paper-radio-button')].find(e=>e.offsetParent&&(e.getAttribute('name')==='PRIVATE'||/^\s*비공개/.test(e.innerText)));
+b.click(); await sl(1200); let r=findR();
+if(!r){const h=[...document.querySelectorAll('*')].filter(e=>e.offsetParent&&e.innerText&&e.innerText.trim()==='저장 또는 게시').pop(); if(h) h.click(); await sl(800); r=await w(findR);}
+if(!r) return 'noradio'; r.click(); await sl(600);
 const done=[...document.querySelectorAll('ytcp-button, button')].find(e=>e.offsetParent&&/^완료$/.test(e.innerText.trim())); if(done) done.click(); await sl(1000);
-const sv=await w(()=>{const s=document.querySelector('ytcp-button#save');return s&&!s.hasAttribute('disabled')&&s.getAttribute('aria-disabled')!=='true'?s:null;},8000); if(!sv) return 'nosave';
-sv.click(); await sl(3500);
-return 'saved:'+((document.querySelector('ytcp-video-metadata-visibility #select-button')||{}).innerText||'').trim();
+const sv=await w(()=>{const s=document.querySelector('ytcp-button#save');return s&&!s.hasAttribute('disabled')&&s.getAttribute('aria-disabled')!=='true'?s:null;}); if(!sv) return 'nosave '+vis();
+sv.click(); await sl(3500); return 'saved:'+vis();})()
